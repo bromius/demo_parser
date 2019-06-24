@@ -79,7 +79,10 @@ class Parser implements \IteratorAggregate
      */
     protected function escape(string $str): string
     {
-        return htmlspecialchars(strip_tags($str));
+        // Replace apostroph and remove non-standard html entities
+        $str = preg_replace('/&#\d+;/', '', str_replace('&#8217;', '\'', $str));
+        $str = htmlspecialchars(strip_tags($str));
+        return $str;
     }
 
 }
